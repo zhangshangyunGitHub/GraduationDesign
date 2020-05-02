@@ -1,0 +1,77 @@
+/*后台的样式文件*/
+#content{
+    width:100%;
+    height:auto;
+    margin:0 auto;
+    font-family: "微软雅黑 Light";
+}
+#header{
+    width:100%;
+    height:150px;
+    background: #f8f8f8;
+}
+#logo{
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 15px;
+}
+#logo1{
+    margin-left: 20px;
+    width: 10%;
+    height: 80%;
+    float: left;
+    text-align: center;
+    line-height: 120px;
+}
+
+#logo2{
+    margin-left: 50px;
+    width: 13%;
+    height: 80%;
+    float: left;
+    vertical-align:middle;
+    line-height: 120px;
+}
+
+#logo3{
+    width: 18%;
+    height: 80%;
+    float: left;
+    font-size: 30px;
+    font-family: 微软雅黑;
+    text-align: center;
+    line-height: 120px;
+}
+
+#logo4{
+    width: 45%;
+    height: 80%;
+    float: right;
+    font-size: 30px;
+    font-family: 微软雅黑;
+    text-align: center;
+    line-height: 120px;
+}
+#nav{
+    width:100%;
+    height:auto;
+}
+#container{
+    width:70%;
+    height:auto;
+    margin: 0 auto;
+    border:1px solid #F2F2F2;
+}
+.form_div{
+    width: 100%;
+    height:auto;
+    border:1px solid #F2F2F2;
+}
+.table_div{
+    width:100%;
+    height:auto;
+    border:1px solid #F2F2F2;
+    margin-top:10px;
+}

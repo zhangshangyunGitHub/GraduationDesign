@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.dao.ApplyDao">
+    <resultMap id="applyMap" type="com.xd.entity.Apply">
+        <id property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="flag" column="flag"/>
+        <association property="book" javaType="com.xd.entity.Book">
+            <id property="bid" column="bid"/>
+            <result property="bname" column="bname"/>
+            <result property="publish" column="publish"/>
+            <result property="author" column="author"/>
+            <result property="price" column="price"/>
+            <result property="isbn" column="ISBN"/>
+            <result property="edition" column="edition"/>
+            <result property="inventory" column="inventory"/>
+            <association property="category" javaType="com.xd.entity.Category">
+                <id property="categoryId" column="CATEGORYID"/>
+                <result property="categoryName" column="CATEGORYNAME"/>
+            </association>
+        </association>
+        <association property="course" javaType="com.xd.entity.Course">
+            <id property="cid" column="cid"/>
+            <result property="cname" column="cname"/>
+            <association property="user" javaType="com.xd.entity.User">
+                <id property="id" column="id"/>
+                <result property="account" column="account"/>
+                <result property="username" column="username"/>
+                <result property="password" column="password"/>
+                <result property="sign" column="sign"/>
+                <result property="flag" column="flag"/>
+            </association>
+        </association>
+        <association property="user" javaType="com.xd.entity.User">
+            <id property="id" column="id"/>
+            <result property="account" column="account"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="sign" column="sign"/>
+            <result property="flag" column="flag"/>
+        </association>
+    </resultMap>
+    <!--添加申请-->
+    <insert id="addApply">
+        INSERT INTO tb_apply VALUES (apply_seq.nextval,#{bid},#{cid},#{tid},#{account},0)
+    </insert>
+    <!--查询所有的申请记录-->
+    <select id="searchApply" resultMap="applyMap">
+        SELECT
+        *
+        /*u.id,s
+        u.username,
+        b.bname,
+        b.bid,
+        a.account,
+        a.id,
+        c.cname,
+        a.flag*/
+        FROM tb_apply a,tb_course c,tb_book b,tb_user u
+        <where>
+            a.cid=c.cid
+            AND a.bid=b.bid
+            AND a.tid=u.id
+            <if test="bids!=null and bids.size()>0">
+                AND a.bid IN
+                <foreach collection="bids" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="tids!=null and tids.size()>0">
+                AND a.tid IN
+                <foreach collection="tids" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <!--根据id更新记录(同意操作)-->
+    <update id="" parameterType="int">
+        UPDATE tb_apply SET inventory=#{newInventory},flag=1
+        WHERE id=#{id}
+    </update>
+    <!--根据id更新记录（驳回操作）-->
+    <update id="rejectApply" parameterType="int">
+        UPDATE tb_apply SET flag=2
+        WHERE id=#{id}
+    </update>
+    <!--根据id更新记录（同意操作）-->
+    <update id="updateApplyFlagById" parameterType="int">
+        UPDATE tb_apply SET flag=1
+        WHERE id=#{id}
+    </update>
+    <!--根据id数组，批量删除申请记录-->
+    <delete id="batchDelApply">
+        DELETE FROM tb_apply
+        WHERE id IN
+        <foreach collection="id" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
