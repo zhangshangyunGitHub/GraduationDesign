@@ -100,7 +100,7 @@ public class ApplyController {
         Map<String,Object> map=new HashMap<String, Object>();
         Integer i = applyService.rejectApply(id);
         System.out.println("更新的记录数："+i);
-        Boolean flag=false;
+        boolean flag=false;
         if(i>0){
             flag=true;
         }
